@@ -106,9 +106,39 @@ class App extends Component {
           <h1 className="App-title">ReactND - Coding Practice</h1>
         </header>
         <h2>How Popular is Your Favorite Movie?</h2>
+		{Object.keys(movies).map( i => {
+          return <div>
+            		<h2>{movies[i].name}</h2>
+          			<Favorite movieId={movies[i].id.toString()} />
+            	 </div>
+        })}
       </div>
     );
   }
+}
+
+class Favorite extends Component {
+	render() {
+		const favorites = profiles.filter( profile => profile.favoriteMovieID === this.props.movieId );
+
+		if (favorites.length === 0) {
+			return (
+				<p>None of the current users liked this movie</p>
+			);
+		} else {
+			return (
+				<div>
+					<p>Liked By:</p>
+					<ul>
+					{favorites.map( profile => {
+						const user = users[profile.userID];
+						return <li key={user.id}>{user.name}</li>
+					})}
+					</ul>
+				</div>
+			);
+		}
+	}
 }
 
 export default App;
